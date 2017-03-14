@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 #-----------------------------------------------------------------------
 # CPM configuration
 #-----------------------------------------------------------------------
-set(CPM_MODULE_NAME png-apng)
+set(CPM_MODULE_NAME png)
 set(CPM_LIB_TARGET_NAME ${CPM_MODULE_NAME})
 
 if ((DEFINED CPM_DIR) AND (DEFINED CPM_UNIQUE_ID) AND (DEFINED CPM_TARGET_NAME))
@@ -51,8 +51,11 @@ CPM_EnsureRepoIsCurrent(
 file(COPY ${LIBPNG_DIR}/scripts/pnglibconf.dfa DESTINATION ${LIBPNG_DIR}/pngusr.dfa)
 add_subdirectory(${LIBPNG_DIR})
 
+add_custom_command(TARGET png_static POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy ${LIBPNG_BIN_DIR}/libpng16.a ${CMAKE_CURRENT_BINARY_DIR}/libpng.a)
+
 CPM_ExportAdditionalIncludeDir("${LIBPNG_DIR}")
-CPM_ExportAdditionalLibraryTarget("png16" z bz)
+CPM_ExportAdditionalLibraryTarget(png z bz)
 
 
 
