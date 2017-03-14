@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 #-----------------------------------------------------------------------
 # CPM configuration
 #-----------------------------------------------------------------------
-set(CPM_MODULE_NAME png)
+set(CPM_MODULE_NAME png-apng)
 set(CPM_LIB_TARGET_NAME ${CPM_MODULE_NAME})
 
 if ((DEFINED CPM_DIR) AND (DEFINED CPM_UNIQUE_ID) AND (DEFINED CPM_TARGET_NAME))
@@ -40,6 +40,7 @@ set(PNG_SHARED OFF CACHE BOOL "" FORCE)
 set(PNG_TESTS OFF CACHE BOOL "" FORCE)
 
 set(LIBPNG_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/libpng)
+set(LIBPNG_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR}/3rdParty/libpng)
 CPM_EnsureRepoIsCurrent(
   TARGET_DIR ${LIBPNG_DIR}
   GIT_REPOSITORY "https://github.com/rinthel/libpng-apng.git"
@@ -50,5 +51,7 @@ file(COPY ${LIBPNG_DIR}/scripts/pnglibconf.dfa DESTINATION ${LIBPNG_DIR}/pngusr.
 add_subdirectory(${LIBPNG_DIR})
 
 CPM_ExportAdditionalIncludeDir("${LIBPNG_DIR}")
-CPM_ExportAdditionalLibraryTarget(png ${LIBPNG_LIBRARIES})
+CPM_ExportAdditionalLibraryTarget(png-apng ${LIBPNG_LIBRARIES})
+
+
 
