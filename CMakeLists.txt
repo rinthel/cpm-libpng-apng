@@ -38,6 +38,7 @@ CPM_InitModule(${CPM_MODULE_NAME})
 #------------------------------------------------------------------------------
 set(PNG_SHARED OFF CACHE BOOL "" FORCE)
 set(PNG_TESTS OFF CACHE BOOL "" FORCE)
+set(SKIP_INSTALL_ALL ON CACHE BOOL "" FORCE)
 
 set(LIBPNG_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/libpng)
 set(LIBPNG_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR}/3rdParty/libpng)
@@ -52,6 +53,7 @@ add_subdirectory(${LIBPNG_DIR})
 
 CPM_ExportAdditionalIncludeDir("${LIBPNG_DIR}")
 CPM_ExportAdditionalLibraryTarget("png16" z bz)
+file(COPY ${LIBPNG_BIN_DIR})
 
 
 
