@@ -31,12 +31,14 @@ endif()
 # # All externals *must* define this.
 # CPM_ForceOnlyOneModuleVersion()
 
-find_package(ZLIB)
-if (NOT ZLIB_FOUND)
-  message(STATUS "ZLib not found.")
-  CPM_AddModule("zlib"
-      GIT_REPOSITORY "https://github.com/rinthel/cpm-zlib"
-      EXPORT_MODULE TRUE)
+if (NOT EMSCRIPTEN)
+  find_package(ZLIB)
+  if (NOT ZLIB_FOUND)
+    message(STATUS "ZLib not found.")
+    CPM_AddModule("zlib"
+        GIT_REPOSITORY "https://github.com/rinthel/cpm-zlib"
+        EXPORT_MODULE TRUE)
+  endif()
 endif()
 
 CPM_InitModule(${CPM_MODULE_NAME})
