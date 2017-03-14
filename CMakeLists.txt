@@ -28,8 +28,16 @@ else()
   include(${CPM_DIR}/CPM.cmake)
 endif()
 
-# All externals *must* define this.
-CPM_ForceOnlyOneModuleVersion()
+# # All externals *must* define this.
+# CPM_ForceOnlyOneModuleVersion()
+
+find_package(ZLIB)
+if (NOT ZLIB_FOUND)
+  message(STATUS "ZLib not found.")
+  CPM_AddModule("zlib"
+      GIT_REPOSITORY "https://github.com/rinthel/cpm-zlib"
+      EXPORT_MODULE TRUE)
+endif()
 
 CPM_InitModule(${CPM_MODULE_NAME})
 
@@ -45,13 +53,6 @@ CPM_EnsureRepoIsCurrent(
   )
 
 project(png)
-
-find_package(ZLIB)
-if (NOT ZLIB_FOUND)
-  message(STATUS "ZLib not found.")
-  CPM_AddModule("zlib"
-      GIT_REPOSITORY "https://github.com/rinthel/cpm-zlib")
-endif()
 
 file(COPY ${LIBPNG_DIR}/scripts/pnglibconf.h.prebuilt DESTINATION ${LIBPNG_DIR})
 file(RENAME ${LIBPNG_DIR}/pnglibconf.h.prebuilt ${LIBPNG_DIR}/pnglibconf.h)
@@ -83,6 +84,8 @@ set(SOURCE_FILES
   )
 
 add_library(png ${SOURCE_FILES})
+if (NOT EMSCRIPTEN AND CPM_LIBRARIES)
+  target_link_libraries(png ${CPM_LIBRARIES})
 
 CPM_ExportAdditionalIncludeDir("${LIBPNG_DIR}")
 CPM_ExportAdditionalLibraryTarget(png)
