@@ -85,7 +85,7 @@ set(SOURCE_FILES
   ${LIBPNG_DIR}/arm/arm_init.c
   )
 
-add_library(png ${SOURCE_FILES})
+add_library(png STATIC ${SOURCE_FILES})
 if (NOT EMSCRIPTEN AND CPM_LIBRARIES)
   target_link_libraries(png ${CPM_LIBRARIES})
 endif()
