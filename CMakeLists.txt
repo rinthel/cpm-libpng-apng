@@ -36,22 +36,53 @@ CPM_InitModule(${CPM_MODULE_NAME})
 #------------------------------------------------------------------------------
 # LIBPNG + APNG Support
 #------------------------------------------------------------------------------
-set(PNG_SHARED OFF CACHE BOOL "" FORCE)
-set(PNG_TESTS OFF CACHE BOOL "" FORCE)
-set(SKIP_INSTALL_ALL ON CACHE BOOL "" FORCE)
-
 set(LIBPNG_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/libpng)
-set(LIBPNG_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR}/3rdParty/libpng)
+
 CPM_EnsureRepoIsCurrent(
   TARGET_DIR ${LIBPNG_DIR}
   GIT_REPOSITORY "https://github.com/rinthel/libpng-apng.git"
   USE_CACHING TRUE
   )
 
-add_subdirectory(${LIBPNG_DIR})
+project(png)
 
-# add_custom_command(TARGET ${LIBPNG_DIR} POST_BUILD
-#   COMMAND ${CMAKE_COMMAND} -E copy ${LIBPNG_BIN_DIR}/libpng16.a ${CMAKE_CURRENT_BINARY_DIR}/libpng.a)
+find_package(ZLIB)
+if (NOT ZLIB_FOUND)
+  message(STATUS "ZLib not found.")
+  CPM_AddModule("zlib"
+      GIT_REPOSITORY "https://github.com/rinthel/cpm-zlib")
+endif()
+
+file(COPY ${LIBPNG_DIR}/scripts/pnglibconf.h.prebuilt DESTINATION ${LIBPNG_DIR})
+file(RENAME ${LIBPNG_DIR}/pnglibconf.h.prebuilt ${LIBPNG_DIR}/pnglibconf.h)
+
+set(SOURCE_FILES
+  ${LIBPNG_DIR}/png.c
+  ${LIBPNG_DIR}/png.h
+  ${LIBPNG_DIR}/pngconf.h
+  ${LIBPNG_DIR}/pngdebug.h
+  ${LIBPNG_DIR}/pngerror.c
+  ${LIBPNG_DIR}/pngget.c
+  ${LIBPNG_DIR}/pnginfo.h
+  ${LIBPNG_DIR}/pngmem.c
+  ${LIBPNG_DIR}/pngpread.c
+  ${LIBPNG_DIR}/pngpriv.h
+  ${LIBPNG_DIR}/pngread.c
+  ${LIBPNG_DIR}/pngrio.c
+  ${LIBPNG_DIR}/pngrtran.c
+  ${LIBPNG_DIR}/pngrutil.c
+  ${LIBPNG_DIR}/pngset.c
+  ${LIBPNG_DIR}/pngstruct.h
+  ${LIBPNG_DIR}/pngtrans.c
+  ${LIBPNG_DIR}/pngwio.c
+  ${LIBPNG_DIR}/pngwrite.c
+  ${LIBPNG_DIR}/pngwtran.c
+  ${LIBPNG_DIR}/pngwutil.c
+  ${LIBPNG_DIR}/arm/filter_neon_intrinsics.c
+  ${LIBPNG_DIR}/arm/arm_init.c
+  )
+
+add_library(png ${SOURCE_FILES})
 
 CPM_ExportAdditionalIncludeDir("${LIBPNG_DIR}")
 CPM_ExportAdditionalLibraryTarget(png)
