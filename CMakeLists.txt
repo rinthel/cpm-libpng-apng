@@ -60,7 +60,10 @@ add_subdirectory(${LIBPNG_DIR})
 #   COMMAND ${CMAKE_COMMAND} -E copy ${LIBPNG_BIN_DIR}/libpng16.a ${CMAKE_CURRENT_BINARY_DIR}/libpng.a)
 
 CPM_ExportAdditionalIncludeDir("${LIBPNG_DIR}")
-CPM_ExportAdditionalLibraryTarget(png z bz)
+CPM_ExportAdditionalLibraryTarget(libpng z bz)
 
-
+get_cmake_property(_variableNames VARIABLES)
+foreach (_variableName ${_variableNames})
+  message(STATUS "${_variableName}=${${_variableName}}")
+endforeach()
 
