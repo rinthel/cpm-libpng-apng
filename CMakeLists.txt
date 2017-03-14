@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 #-----------------------------------------------------------------------
 # CPM configuration
 #-----------------------------------------------------------------------
-set(CPM_MODULE_NAME png)
+set(CPM_MODULE_NAME libpng)
 set(CPM_LIB_TARGET_NAME ${CPM_MODULE_NAME})
 
 if ((DEFINED CPM_DIR) AND (DEFINED CPM_UNIQUE_ID) AND (DEFINED CPM_TARGET_NAME))
@@ -48,22 +48,10 @@ CPM_EnsureRepoIsCurrent(
   USE_CACHING TRUE
   )
 
-file(COPY ${LIBPNG_DIR}/scripts/pnglibconf.dfa DESTINATION ${LIBPNG_DIR}/pngusr.dfa)
-
-if (POLICY CMP0040)
-  cmake_policy(SET CMP0040 NEW)
-endif(POLICY CMP0040)
-
 add_subdirectory(${LIBPNG_DIR})
 
 # add_custom_command(TARGET ${LIBPNG_DIR} POST_BUILD
 #   COMMAND ${CMAKE_COMMAND} -E copy ${LIBPNG_BIN_DIR}/libpng16.a ${CMAKE_CURRENT_BINARY_DIR}/libpng.a)
 
 CPM_ExportAdditionalIncludeDir("${LIBPNG_DIR}")
-CPM_ExportAdditionalLibraryTarget(libpng z bz)
-
-get_cmake_property(_variableNames VARIABLES)
-foreach (_variableName ${_variableNames})
-  message(STATUS "${_variableName}=${${_variableName}}")
-endforeach()
-
+CPM_ExportAdditionalLibraryTarget(png z bz)
