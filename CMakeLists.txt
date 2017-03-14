@@ -51,7 +51,7 @@ file(COPY ${LIBPNG_DIR}/scripts/pnglibconf.dfa DESTINATION ${LIBPNG_DIR}/pngusr.
 add_subdirectory(${LIBPNG_DIR})
 
 CPM_ExportAdditionalIncludeDir("${LIBPNG_DIR}")
-CPM_ExportAdditionalLibraryTarget(png-apng)
+CPM_ExportAdditionalLibraryTarget("png16" z bz)
 
 
 
