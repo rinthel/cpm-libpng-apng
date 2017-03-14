@@ -53,7 +53,6 @@ add_subdirectory(${LIBPNG_DIR})
 
 CPM_ExportAdditionalIncludeDir("${LIBPNG_DIR}")
 CPM_ExportAdditionalLibraryTarget("png16" z bz)
-file(COPY ${LIBPNG_BIN_DIR})
 
 
 
