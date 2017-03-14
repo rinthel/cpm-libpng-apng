@@ -86,6 +86,7 @@ set(SOURCE_FILES
 add_library(png ${SOURCE_FILES})
 if (NOT EMSCRIPTEN AND CPM_LIBRARIES)
   target_link_libraries(png ${CPM_LIBRARIES})
+endif()
 
 CPM_ExportAdditionalIncludeDir("${LIBPNG_DIR}")
 CPM_ExportAdditionalLibraryTarget(png)
