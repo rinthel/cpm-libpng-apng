@@ -90,7 +90,7 @@ if (NOT EMSCRIPTEN AND CPM_LIBRARIES)
   target_link_libraries(png ${CPM_LIBRARIES})
 endif()
 if (EMSCRIPTEN)
-  set_target_properties(${SOURCE_FILES} PROPERTIES COMPILE_FLAGS "-s USE_ZLIB=1")
+  set_source_files_properties(${SOURCE_FILES} PROPERTIES COMPILE_FLAGS "-s USE_ZLIB=1")
 endif()
 
 CPM_ExportAdditionalIncludeDir("${LIBPNG_DIR}")
