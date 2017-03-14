@@ -36,8 +36,8 @@ CPM_InitModule(${CPM_MODULE_NAME})
 #------------------------------------------------------------------------------
 # LIBPNG + APNG Support
 #------------------------------------------------------------------------------
-set(PNG_SHARED OFF)
-set(PNG_TESTS OFF)
+set(PNG_SHARED OFF CACHE BOOL "" FORCE)
+set(PNG_TESTS OFF CACHE BOOL "" FORCE)
 
 set(LIBPNG_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/libpng)
 CPM_EnsureRepoIsCurrent(
@@ -46,6 +46,7 @@ CPM_EnsureRepoIsCurrent(
   USE_CACHING TRUE
   )
 
+file(COPY ${LIBPNG_DIR}/scripts/pnglibconf.dfa DESTINATION ${LIBPNG_DIR}/pngusr.dfa)
 add_subdirectory(${LIBPNG_DIR})
 
 CPM_ExportAdditionalIncludeDir("${LIBPNG_DIR}")
